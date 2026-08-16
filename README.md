@@ -1,50 +1,123 @@
-# Welcome to your Expo app 👋
+# React Native Authentication System
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A complete authentication system built with React Native (Expo), supporting three user roles: User, Admin, and NGO. The system includes JWT-based authentication, role-based navigation, and WebView integration for role-specific dashboards.
 
-## Get started
+## Features
 
-1. Install dependencies
+- User authentication (Login/Signup)
+- Role-based access control (User, Admin, NGO)
+- JWT token-based authentication
+- Secure token storage using Expo Secure Store
+- Protected routes
+- Role-specific WebView dashboards
+- MongoDB database integration
+- Express.js backend API
 
+## Prerequisites
+
+- Node.js (v14 or later)
+- MongoDB (running locally or a remote instance)
+- Expo CLI (`npm install -g expo-cli`)
+
+## Installation
+
+1. Clone the repository
+2. Install frontend dependencies:
    ```bash
    npm install
    ```
 
-2. Start the app
-
+3. Install backend dependencies:
    ```bash
-    npx expo start
+   cd backend
+   npm install
    ```
 
-In the output, you'll find options to open the app in a
+4. Configure environment variables:
+   - Copy `backend/.env.example` to `backend/.env`
+   - Update the environment variables as needed
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Running the Application
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+1. Start the backend server:
+   ```bash
+   cd backend
+   npm run dev
+   ```
 
-## Get a fresh project
+2. Start the Expo development server:
+   ```bash
+   # In a new terminal, from the project root
+   npm start
+   ```
 
-When you're ready, run:
+3. Run on your device or emulator:
+   - Press 'a' for Android
+   - Press 'i' for iOS
+   - Scan QR code with Expo Go app for physical devices
 
-```bash
-npm run reset-project
+## Project Structure
+
+```
+.
+├── app/
+│   ├── context/
+│   │   └── AuthContext.js
+│   │   
+│   │   └── screens/
+│   │       ├── LoginScreen.js
+│   │       ├── SignupScreen.js
+│   │       └── DashboardScreen.js
+│   └── config/
+│       └── api.js
+├── backend/
+│   ├── server.js
+│   └── .env
+└── package.json
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## API Endpoints
 
-## Learn more
+### Authentication
+- POST `/auth/register` - User registration
+- POST `/auth/login` - User login
+- GET `/auth/user` - Get user profile (protected)
 
-To learn more about developing your project with Expo, look at the following resources:
+### User Management (Admin only)
+- GET `/users` - Get list of all users
+- PUT `/users/:userId/activate` - Activate a user account
+- PUT `/users/:userId/deactivate` - Deactivate a user account
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## User Management
 
-## Join the community
+The application includes an admin dashboard that allows administrators to:
 
-Join our community of developers creating universal apps.
+1. View all users in the system
+2. Activate or deactivate user accounts
+3. Monitor user registration statistics
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Deactivated users cannot log into the application and will be automatically logged out if already logged in.
+
+## Security Considerations
+
+- JWT tokens are stored securely using Expo Secure Store
+- Passwords are hashed using bcrypt
+- Protected routes require valid JWT tokens
+- Environment variables for sensitive data
+
+## WebView Integration
+
+The application uses WebView to display role-specific dashboards:
+- User Dashboard: `https://yourapp.com/user-dashboard`
+- Admin Dashboard: `https://yourapp.com/admin-dashboard`
+- NGO Dashboard: `https://yourapp.com/ngo-dashboard`
+
+Replace these URLs with your actual dashboard URLs.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
